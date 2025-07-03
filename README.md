@@ -28,9 +28,9 @@ The project builds on the reference paper produced by Suselj et al (2024) presen
 - Develop a 2D horizontal model to simulate $CO_2$ dynamics related to alkalinity injection at the surface,
 - Explicitly take into account horizontal transport by advection, without horizontal diffusion (dominance of currents),
 - Simulate the following processes:
-      -  Continuous local injection of alkalinity flux into the initial surface cell,
-      -  Horizontal transport of alkalinity and dissolved carbon (DIC),
-      -  Air-sea exchange of $CO_2$ at the surface according to ALK and DIC perturbations.
+-   Continuous local injection of alkalinity flux into the initial surface cell,
+-   Horizontal transport of alkalinity and dissolved carbon (DIC),
+-   Air-sea exchange of $CO_2$ at the surface according to ALK and DIC perturbations.
 - Use a Lagrangian method (OceanParcels tool) to simulate particle trajectories as a function of velocity fields U and V.
 
 ---
