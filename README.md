@@ -28,9 +28,9 @@ The project builds on the reference paper produced by Suselj et al (2024) presen
 - Develop a 2D horizontal model to simulate $CO_2$ dynamics related to alkalinity injection at the surface,
 - Explicitly take into account horizontal transport by advection, without horizontal diffusion (dominance of currents),
 - Simulate the following processes:
-+ Continuous local injection of alkalinity flux into the initial surface cell,
-+ Horizontal transport of alkalinity and dissolved carbon (DIC),
-+ Air-sea exchange of $CO_2$ at the surface according to ALK and DIC perturbations.
+  - Continuous local injection of alkalinity flux into the initial surface cell,
+  - Horizontal transport of alkalinity and dissolved carbon (DIC),
+  - Air-sea exchange of $CO_2$ at the surface according to ALK and DIC perturbations.
 - Use a Lagrangian method (OceanParcels tool) to simulate particle trajectories as a function of velocity fields U and V.
 
 ---
@@ -55,6 +55,6 @@ The project builds on the reference paper produced by Suselj et al (2024) presen
 
 ## Main Reference 
 
-Suselj K. et al. Quantifying Regional Efficiency of Marine Carbon Dioxide Removal (mCDR) via Alka
+Suselj K. et al. (2024) Quantifying Regional Efficiency of Marine Carbon Dioxide Removal (mCDR) via Alka
 linity Enhancement using the ECCO-Darwin Ocean Biogeochemistry State Estimate and an Idealized
  Vertical 1-D Model.
