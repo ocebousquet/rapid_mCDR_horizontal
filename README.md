@@ -2,7 +2,7 @@
 
 ## Project Context
 
-This project is part of an internship aimed at gaining a deeper understanding of the physical-biogeochemical mechanisms controlling carbon exchange between the ocean and the atmosphere, in particular through the Ocean Alkalinity Enhancement (OAE) method. OAE is a Marine Carbon Dioxide Removal (mCDR) technique that involves increasing the alkalinity of the ocean to enhance its capacity to sequester atmospheric $CO_2$. This method alters the equilibrium of the ocean carbonate system, promoting the dissolution and long-term storage of carbon dioxide in the ocean.
+This project is part of an internship aimed at gaining a deeper understanding of the physical-biogeochemical mechanisms controlling carbon exchange between the ocean and the atmosphere, in particular through the Ocean Alkalinity Enhancement (OAE) method. OAE is a Marine Carbon Dioxide Removal (mCDR) technique that involves increasing the alkalinity of the ocean to enhance its capacity to sequester atmospheric $CO_2$. This method alters the equilibrium of the ocean carbonate system, promoting the dissolution and long-term storage of carbon dioxide ($CO_2^{aq}$) in the ocean.
 
 The project builds on the reference paper produced by Suselj et al (2024) presenting Rapid-mCDR, a simplified 1D vertical model that simulates carbon dynamics in the water column after injection of an alkalinity flux. The aim is to improve this model by explicitly integrating horizontal transport (U and V currents) to develop a simplified 3D model, while maintaining computational simplicity and efficiency.
 
@@ -19,19 +19,19 @@ The project builds on the reference paper produced by Suselj et al (2024) presen
 ### Limitations of the initial vertical model
 
 - The 1D model integrates horizontal transport only on average (spatially integrated), which limits realistic modeling of spatial variations in DIC and ALK,
-- Need to explicitly incorporate horizontal dynamics (U and V currents) to better represent the dispersion of injected alkalinity and net $CO_2$ flux.
+- Need to explicitly incorporate horizontal dynamics (U and V currents) to better represent the dispersion of injected alkalinity and net $CO_2$ flux to the surface.
 
 ---
 
 ## Project Objectives
 
 - Develop a 2D horizontal model to simulate $CO_2$ dynamics related to alkalinity injection at the surface,
-- Explicitly take into account horizontal transport by advection, without horizontal diffusion (dominance of currents),
+- Explicitly take into account horizontal transport by advection, without horizontal diffusion (dominance of horizontal currents),
 - Simulate the following processes:
-  - Continuous local injection of alkalinity flux into the initial surface cell,
+  - Continuous/daily local injection of alkalinity flux into the initial surface cell,
   - Horizontal transport of alkalinity and dissolved carbon (DIC),
   - Air-sea exchange of $CO_2$ at the surface according to ALK and DIC perturbations.
-- Use a Lagrangian method (OceanParcels tool) to simulate particle trajectories as a function of velocity fields U and V.
+- Use a Lagrangian method (OceanParcels tool) to simulate surface particle trajectories as a function of velocity fields U and V.
 
 ---
 
