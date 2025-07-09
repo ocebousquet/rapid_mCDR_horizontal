@@ -37,10 +37,13 @@ The project builds on the reference paper produced by Suselj et al (2024) presen
 
 ## Description of Codes
 
-- `read-create_LLC270datas.ipynb`:
-- `create_forcing_datas.ipynb`:
-- `datas_fonctions.py`:
-- `LLC270_OceanParcels_rapidmCDR.ipynb`:
+### DatasLLC270:
+- `read-create_LLC270datas.ipynb`: Jupyter notebook for reading LLC270 output data from ECCO-Darwin and creating NetCDF files from this data for use in OceanParcels,
+- `create_forcing_datas.ipynb`: Jupyter notebook to create forcing data by calculating and extracting it from the data used in the rapid-mCDR vertical model,
+- `datas_fonctions.py`: Python code for all data creation, formatting and display functions.
+
+### RapidmCDR:
+- `LLC270_OceanParcels_rapidmCDR.ipynb`: Jupyter notebook to simulate the rapid-mCDR 2D horizontal model using LLC270 output data from ECCO-Darwin and the Lagrangian method from OceanParcels.
   
 ---
 
