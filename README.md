@@ -4,7 +4,7 @@
 
 This project is part of an internship aimed at gaining a deeper understanding of the physical-biogeochemical mechanisms controlling carbon exchange between the ocean and the atmosphere, in particular through the Ocean Alkalinity Enhancement (OAE) method. OAE is a Marine Carbon Dioxide Removal (mCDR) technique that involves increasing the alkalinity of the ocean to enhance its capacity to sequester atmospheric $CO_2$. This method alters the equilibrium of the ocean carbonate system, promoting the dissolution and long-term storage of carbon dioxide ($CO_2^{aq}$) in the ocean.
 
-The project builds on the reference paper produced by Suselj et al (2024) presenting Rapid-mCDR, a simplified 1D vertical model that simulates carbon dynamics in the water column after injection of an alkalinity flux. The aim is to improve this model by explicitly integrating horizontal transport (U and V currents) to develop a simplified 3D model, while maintaining computational simplicity and efficiency.
+The project builds on the reference paper produced by Suselj et al. (2024) presenting Rapid-mCDR, a simplified 1D vertical model that simulates carbon dynamics in the water column after injection of an alkalinity flux. The aim is to improve this model by explicitly integrating horizontal transport (U and V currents) to develop a simplified 3D model, while maintaining computational simplicity and efficiency.
 
 ---
 
@@ -38,21 +38,21 @@ The project builds on the reference paper produced by Suselj et al (2024) presen
 ## Description of Codes
 
 ### DatasLLC270:
-- `read-create_LLC270datas.ipynb`: Jupyter notebook for reading LLC270 output data from ECCO-Darwin and creating NetCDF files from this data for use in OceanParcels,
-- `create_forcing_datas.ipynb`: Jupyter notebook to create forcing data by calculating and extracting it from the data used in the rapid-mCDR vertical model,
-- `datas_fonctions.py`: Python code for all data creation, formatting and display functions used in notebooks to create NetCDF files and forcing datas.
+- `read-create_LLC270data.ipynb`: first Jupyter notebook for reading LLC270 output data from ECCO Data Portal (select the date of the required monthly data for DIC, ALK, SST, SSS, velocities U and V) and creating NetCDF files from this data for use in OceanParcels (need XC, YC, XG, and YG grids from ECCO Data Portal),
+- `create_forcing_data.ipynb`: second Jupyter notebook to create forcing data by calculating and extracting it from the data used in the rapid-mCDR vertical model (Suselj et al. 2024),
+- `data_fonctions.py`: Python code for all data creation, formatting and display functions used in notebooks to create NetCDF files and forcing datas.
 
 ### RapidmCDR:
-- `LLC270_OceanParcels_rapidmCDR.ipynb`: Jupyter notebook to simulate the rapid-mCDR 2D horizontal model using LLC270 output data from ECCO-Darwin and the Lagrangian method from OceanParcels.
+- `LLC270_OceanParcels_rapidmCDR.ipynb`: last Jupyter notebook to simulate the rapid-mCDR 2D horizontal model using LLC270 output data from ECCO-Darwin, forcing data from rapid-mCDR vertical model (Suselj et al. 2024) and the Lagrangian method (particle tracking) from OceanParcels.
   
 ---
 
 ## Dependencies
 
 - Python 3.x
-- OceanParcels (for Lagrangian simulation)
 - Scientific libraries (numpy, scipy, matplotlib)
-- ECCO-Darwin data (for ocean fields)
+- OceanParcels (for Lagrangian simulation)
+- ECCO-Darwin data from ECCO Data Portal (for ocean fields and grids)
 
 ---
 
