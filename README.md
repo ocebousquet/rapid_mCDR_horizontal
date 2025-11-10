@@ -38,7 +38,7 @@ The project builds on the reference paper produced by Suselj et al. (2024) prese
 ## Description of Codes
 
 ### DatasLLC270:
-- `read-create_LLC270data.ipynb`: first Jupyter notebook for reading LLC270 output data from ECCO Data Portal (select the date of the required monthly data for DIC, ALK, SST, SALTanom, uVel_C and vVel_C) and creating NetCDF files from this data for use in OceanParcels (need XC, YC, XG, and YG grids for LLC270 output from ECCO Data Portal),
+- `read-create_LLC270data.ipynb`: first Jupyter notebook for reading LLC270 output data from ECCO Data Portal (select the date of the required monthly data for DIC, ALK, SST, SALTanom, uVel_C and vVel_C) and creating NetCDF files from this data for use in OceanParcels (need XC, YC, XG, and YG grids for LLC270 data from ECCO Data Portal),
 - `create_forcing_data.ipynb`: second Jupyter notebook to create forcing data by calculating and extracting it from the data used in the rapid-mCDR vertical model (Suselj et al. 2024),
 - `data_fonctions.py`: Python code for all data creation, formatting and display functions used in notebooks to create NetCDF files and forcing datas.
 
