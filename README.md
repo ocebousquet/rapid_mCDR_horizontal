@@ -29,7 +29,7 @@ The project builds on the reference paper produced by Suselj et al. (2024) prese
 - Explicitly take into account horizontal transport by advection, without horizontal diffusion (dominance of horizontal currents),
 - Simulate the following processes:
   - Continuous/daily local injection of alkalinity flux into the initial surface cell,
-  - Horizontal transport of alkalinity and dissolved carbon (DIC),
+  - Horizontal transport of alkalinity and dissolved inorganic carbon,
   - Air-sea exchange of $CO_2$ at the surface according to ALK and DIC perturbations.
 - Use a Lagrangian method (OceanParcels tool) to simulate surface particle trajectories as a function of velocity fields U and V.
 
@@ -38,7 +38,7 @@ The project builds on the reference paper produced by Suselj et al. (2024) prese
 ## Description of Codes
 
 ### DatasLLC270:
-- `read-create_LLC270data.ipynb`: first Jupyter notebook for reading LLC270 output data from ECCO Data Portal (select the date of the required monthly data for DIC, ALK, SST, SSS, velocities U and V) and creating NetCDF files from this data for use in OceanParcels (need XC, YC, XG, and YG grids from ECCO Data Portal),
+- `read-create_LLC270data.ipynb`: first Jupyter notebook for reading LLC270 output data from ECCO Data Portal (select the date of the required monthly data for DIC, ALK, SST, SALTanom, uVel_C and vVel_C) and creating NetCDF files from this data for use in OceanParcels (need XC, YC, XG, and YG grids for LLC270 output from ECCO Data Portal),
 - `create_forcing_data.ipynb`: second Jupyter notebook to create forcing data by calculating and extracting it from the data used in the rapid-mCDR vertical model (Suselj et al. 2024),
 - `data_fonctions.py`: Python code for all data creation, formatting and display functions used in notebooks to create NetCDF files and forcing datas.
 
@@ -49,10 +49,11 @@ The project builds on the reference paper produced by Suselj et al. (2024) prese
 
 ## Dependencies
 
-- Python 3.x
 - Scientific libraries (numpy, scipy, matplotlib)
-- OceanParcels (for Lagrangian simulation)
-- ECCO-Darwin data from ECCO Data Portal (for ocean fields and grids)
+- OceanParcels (for Lagrangian simulation): https://docs.parcels-code.org/en/latest/
+- ECCO-Darwin data from ECCO Data Portal (for ocean fields and grids):
+  - https://data.nas.nasa.gov/ecco/llc_270/ecco_darwin_v5/output/monthly/
+  - https://data.nas.nasa.gov/ecco/llc_270/grid/
 
 ---
 
