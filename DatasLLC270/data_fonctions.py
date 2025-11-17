@@ -211,7 +211,7 @@ def plot_tiles(data, tsz, title=None):
 
 
 def plot_flat_data(longitudes, latitudes, data, variable_name, colorbar_title=None, unit=None, scatter_point=None,
-                   depth_value=None, time_value=None, cmap='coolwarm'):
+                   depth_value=None, time_value=None, cmap='coolwarm', min_max=None):
     """
     Plots a selected oceanographic variable (DIC, Alk, U and V velocities) on a geographical map.
 
@@ -233,7 +233,11 @@ def plot_flat_data(longitudes, latitudes, data, variable_name, colorbar_title=No
     fig, ax = plt.subplots(figsize=(14, 10), subplot_kw={'projection': ccrs.PlateCarree()})
 
     # Plot the data using pcolormesh
-    img = ax.pcolormesh(longitudes, latitudes, data, shading="auto", cmap=cmap, transform=ccrs.PlateCarree())
+    if min_max is None:
+        img = ax.pcolormesh(longitudes, latitudes, data, shading="auto", cmap=cmap, transform=ccrs.PlateCarree())
+    else:
+        img = ax.pcolormesh(longitudes, latitudes, data, shading="auto", cmap=cmap, transform=ccrs.PlateCarree(),
+                        vmin=min_max[0], vmax=min_max[1])
 
     # Adjust the extent of the plot
     ax.set_extent([longitudes.min(), longitudes.max(), latitudes.min(), latitudes.max()], crs=ccrs.PlateCarree())
