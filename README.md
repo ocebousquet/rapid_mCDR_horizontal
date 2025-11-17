@@ -62,3 +62,5 @@ The project builds on the reference paper produced by Suselj et al. (2024) prese
 Kay Suselj, Dustin Carroll, Daniel Whitt, Bridget Samuels, Dimitris Menemenlis, Hong Zhang, Nate Beatty, Anna Savage (2024)
 
 Quantifying Regional Efficiency of Marine Carbon Dioxide Removal (mCDR) via Alkalinity Enhancement using the ECCO-Darwin Ocean Biogeochemistry State Estimate and an Idealized Vertical 1-D Model.
+
+https://doi.org/10.1029/2024MS004847
