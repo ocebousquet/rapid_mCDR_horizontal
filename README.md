@@ -38,19 +38,19 @@ The project builds on the reference paper produced by Suselj et al. (2024) prese
 ## Description of Codes
 
 ### DatasLLC270:
-- `read-create_LLC270data.ipynb`: first Jupyter notebook for reading LLC270 output data from ECCO Data Portal (select the date of the required monthly data for DIC, ALK, SST, SALTanom, uVel_C and vVel_C) and creating NetCDF files from this data for use in OceanParcels (need XC, YC, XG, and YG grids for LLC270 data from ECCO Data Portal),
-- `create_forcing_data.ipynb`: second Jupyter notebook to create forcing data by calculating and extracting it from the data used in the rapid-mCDR vertical model (Suselj et al. 2024),
-- `data_fonctions.py`: Python code for all data creation, formatting and display functions used in notebooks to create NetCDF files and forcing datas.
+- `read-create_LLC270data.ipynb`: First Jupyter notebook reads LLC270 output data from the ECCO data portal. You select the date of the required monthly fields—DIC, ALK, SST, SALTanom, and the velocity components uVel_C, vVel_C, and wVel. It also retrieves the XC, YC, XG, and YG grid files associated with the LLC270 dataset. The notebook then generates NetCDF files on Arakawa C grids for use in OceanParcels.
+- `create_forcing_data.ipynb`: Second Jupyter notebook used to create the forcing data by computing and extracting it from the datasets used in the rapid-mCDR vertical model (Suselj et al., 2024).
+- `data_fonctions.py`: Python code containing all functions used in the notebooks for creating, formatting, and visualizing data, including the routines that generate NetCDF files and forcing datasets.
 
 ### RapidmCDR:
-- `LLC270_OceanParcels_rapidmCDR.ipynb`: last Jupyter notebook to simulate the rapid-mCDR 2D horizontal model using LLC270 output data from ECCO-Darwin, forcing data from rapid-mCDR vertical model (Suselj et al. 2024) and the Lagrangian method (particle tracking) from OceanParcels.
+- `LLC270_OceanParcels_rapidmCDR.ipynb`: Final Jupyter notebook used to run the rapid-mCDR 2D horizontal model, combining LLC270 output data from ECCO-Darwin, forcing data derived from the rapid-mCDR vertical model (Suselj et al., 2024), and the Lagrangian particle-tracking method provided by OceanParcels.
   
 ---
 
 ## Dependencies
 
-- Scientific libraries (numpy, scipy, matplotlib)
-- OceanParcels (for Lagrangian simulation): https://docs.parcels-code.org/en/latest/
+- Scientific libraries (numpy, scipy, xarray, pandas, matplotlib, cartopy, MITgcmutils, netCDF4, parcels, PyCO2SYS)
+- OceanParcels (for Lagrangian particle-tracking simulation): https://docs.parcels-code.org/en/latest/
 - ECCO-Darwin data from ECCO Data Portal (for ocean fields and grids):
   - https://data.nas.nasa.gov/ecco/llc_270/ecco_darwin_v5/output/monthly/
   - https://data.nas.nasa.gov/ecco/llc_270/grid/
