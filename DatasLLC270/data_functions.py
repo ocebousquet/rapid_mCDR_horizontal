@@ -7,8 +7,8 @@ import cartopy.crs as ccrs
 from netCDF4 import Dataset
 import scipy.interpolate as spi
 import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
 import cartopy.feature as cfeature
+from matplotlib.gridspec import GridSpec
 
 
 def flat(fld, **kwargs):
