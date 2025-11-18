@@ -391,7 +391,7 @@ def interpolate_missing_values(grid_data, grid_name, sub_y=189, sub_x=270):
 
 
 def create_netcdf(var_name, dtime, var_data, time, depth, lon, lat, latitude='Latitude',
-                  longitude='Longitude', date=None, var_units=None, var_long_name=None):
+                  longitude='Longitude', date=None, var_units=None, var_long_name=None, depth_comment=None):
     """
     Create a NetCDF file with specified variable and metadata.
 
@@ -408,6 +408,7 @@ def create_netcdf(var_name, dtime, var_data, time, depth, lon, lat, latitude='La
         - date (str, optional): Start date of the data.
         - var_units (str, optional): Units for the main variable.
         - var_long_name (str, optional): Long name for the main variable.
+        - depth_comment (str, optional): Comment to define the depth position of the grid cell
 
     Returns:
         - None (Creates a NetCDF file with the specified data and metadata).
@@ -449,7 +450,7 @@ def create_netcdf(var_name, dtime, var_data, time, depth, lon, lat, latitude='La
     lat_var.units = "degrees_north"
     lon_var.units = "degrees_east"
     depth_var.units = "meters"
-    depth_var.comment = "Depth levels"
+    depth_var.comment = depth_comment
     time_var.comment = date  # Start date of the data
     time_var.long_name = "Start date of the data in nanoseconds since 1970-01-01 00:00:00 UTC"
     var.units = var_units
@@ -479,6 +480,11 @@ def extract_data_at_depth(var, dtime, depth, latitude='Latitude', longitude='Lon
     Returns:
         - None (saves the extracted data at the specified depth to a new NetCDF file).
     """
+    # Check if the file already exists
+    if os.path.exists(f"{var}_{dtime}_{depth}.nc"):
+        print(f"File {var}_{dtime}_{depth}.nc already exists.")
+        return
+
     # Load NetCDF file
     ds = xr.open_dataset(f"{var}_{dtime}.nc").set_coords([f"{latitude}", f"{longitude}"])
 
@@ -491,20 +497,20 @@ def extract_data_at_depth(var, dtime, depth, latitude='Latitude', longitude='Lon
     print(f"{var} data extracted and saved for depth {depth}.")
 
 
-def crop_dic_alk(DIC, ALK, coord_box):
+def crop_var(var, var_name, coord_box, depth=None):
     """
-    Extract and crop DIC and ALK data around a specified geographic bounding box,
+    Extract and crop data around a specified geographic bounding box,
     and return the corresponding indices of latitude and longitude for the cropped region.
 
     Parameters:
-        DIC (xarray.Dataset): Dataset containing the DIC variable.
-        ALK (xarray.Dataset): Dataset containing the ALK variable.
-        coord_box (list or tuple): [lon_min, lon_max, lat_min, lat_max]
+        var (xarray.Dataset): Dataset containing the variable to crop.
+        var_name (str): Name of the variable.
+        coord_box (list or tuple): [lon_min, lon_max, lat_min, lat_max].
+        depth (int, optional): Depth level for which data is to be cropped.
 
     Returns:
-        tuple: (dic_cropped, alk_cropped, lat_cropped, lon_cropped, lat_indices, lon_indices)
-            dic_cropped: 2D NumPy array of cropped DIC data.
-            alk_cropped: 2D NumPy array of cropped ALK data.
+        tuple: (var_cropped, lat_cropped, lon_cropped, lat_indices, lon_indices)
+            var_cropped: 2D NumPy array of cropped data.
             lat_cropped: 1D array of the latitude values for the cropped region.
             lon_cropped: 1D array of the longitude values for the cropped region.
             lat_indices: Indices corresponding to the cropped latitudes.
@@ -513,22 +519,24 @@ def crop_dic_alk(DIC, ALK, coord_box):
     lon_min, lon_max, lat_min, lat_max = coord_box
 
     # Get the latitude and longitude variables
-    lon = DIC["Longitude"]
-    lat = DIC["Latitude"]
+    lon = var["Longitude"]
+    lat = var["Latitude"]
 
     # Create a boolean mask for the desired geographic region
     mask = (lon >= lon_min) & (lon <= lon_max) & (lat >= lat_min) & (lat <= lat_max)
 
-    # Apply the mask to the DIC and ALK variables (assuming time dimension, e.g., Time=0)
-    dic_masked = DIC["DIC"].isel(Time=0).where(mask)
-    alk_masked = ALK["ALK"].isel(Time=0).where(mask)
+    if depth != None:
+        # Apply the mask to the variable at a given depth layer (assuming time dimension, e.g., Time=0)
+        var_masked = var[f"{var_name}"].isel(Time=0).isel(Depth=depth).where(mask)
+    else:
+        # Apply the mask to the variable (assuming time dimension, e.g., Time=0)
+        var_masked = var[f"{var_name}"].isel(Time=0).where(mask)
 
     # Convert to NumPy arrays
-    dic_values = dic_masked.values
-    alk_values = alk_masked.values
+    var_values = var_masked.values
 
     # Identify valid (non-NaN) data
-    valid_mask = ~np.isnan(dic_values)
+    valid_mask = ~np.isnan(var_values)
     rows = np.any(valid_mask, axis=1)
     cols = np.any(valid_mask, axis=0)
 
@@ -540,14 +548,13 @@ def crop_dic_alk(DIC, ALK, coord_box):
     col_start, col_end = np.where(cols)[0][[0, -1]]
 
     # Crop the arrays to the bounding box with valid data
-    dic_cropped = dic_values[row_start:row_end+1, col_start:col_end+1]
-    alk_cropped = alk_values[row_start:row_end+1, col_start:col_end+1]
+    var_cropped = var_values[row_start:row_end+1, col_start:col_end+1]
 
     # Get the corresponding indices for latitudes and longitudes
     lat_indices = np.arange(row_start, row_end+1)
     lon_indices = np.arange(col_start, col_end+1)
 
-    return dic_cropped, alk_cropped, lat_indices, lon_indices
+    return var_cropped, lat_indices, lon_indices
 
 
 def compute_dpco2_sensitivity(dic, alk, salt, sst, rho_water=1.028):
