@@ -210,7 +210,7 @@ def plot_tiles(data, tsz, title=None):
     plt.show()
 
 
-def plot_flat_data(longitudes, latitudes, data, variable_name, colorbar_title=None, unit=None, scatter_point=None,
+def plot_flat_data(longitudes, latitudes, data, variable_name, colorbar_title=None, unit=None, extent=None,
                    depth_value=None, time_value=None, cmap='coolwarm', min_max=None):
     """
     Plots a selected oceanographic variable (DIC, Alk, U and V velocities) on a geographical map.
@@ -222,8 +222,12 @@ def plot_flat_data(longitudes, latitudes, data, variable_name, colorbar_title=No
         - variable_name (str): Name of the variable to display on the plot.
         - colorbar_title (str, optional): Custom title for the colorbar.
         - unit (str, optional): Unit of the variable.
-        - depth_value (float, optional): Depth value for the title.
-        - scatter_point (tuple, optional): Coordinates (lon, lat) of a point to highlight.
+        - extent (list, optional): Create a red box around the region of interest.
+        - depth_value (float, optional): Depth of the data.
+        - time_value (str, optional): Date of the data.
+        - cmap (str, optional): Colormap for the plot. Default is 'coolwarm'.
+        - min_max (list, optional): Modify the scale of values/colorbar with a minimum and maximum .
+
 
     Returns:
         - None (Displays the plot)
@@ -256,10 +260,11 @@ def plot_flat_data(longitudes, latitudes, data, variable_name, colorbar_title=No
     # Add a colorbar
     plt.colorbar(img, ax=ax, orientation="vertical", label=cbar_label)
 
-    # If a scatter point is provided, plot it
-    if scatter_point:
-        lon, lat = scatter_point
-        ax.scatter(lon, lat, color="red", s=2, transform=ccrs.PlateCarree())
+    # If a region is provided, plot it
+    if extent:
+        ax.plot([extent[0], extent[1], extent[1], extent[0], extent[0]],
+                [extent[2], extent[2], extent[3], extent[3], extent[2]],
+                color="red", linestyle='-')
 
     # Set x and y axis limits (longitude/latitude)
     ax.set_xticks(np.linspace(longitudes.min(), longitudes.max(), num=5), crs=ccrs.PlateCarree())
@@ -416,10 +421,10 @@ def create_netcdf(var_name, dtime, var_data, time, depth, lon, lat, latitude='La
     # Define the filename
     filename = f"{var_name}_{dtime}.nc"
 
-    # Check if the file already exists
+    # Check if the file already exists → remove it to overwrite cleanly
     if os.path.exists(filename):
-        print(f"File {filename} already exists.")
-        return
+        print(f"File {filename} already exists. Overwriting...")
+        os.remove(filename)
 
     # Create NetCDF file
     dataset = Dataset(filename, "w", format="NETCDF4")
@@ -480,10 +485,10 @@ def extract_data_at_depth(var, dtime, depth, latitude='Latitude', longitude='Lon
     Returns:
         - None (saves the extracted data at the specified depth to a new NetCDF file).
     """
-    # Check if the file already exists
+    # Check if the file already exists → remove it to overwrite cleanly
     if os.path.exists(f"{var}_{dtime}_{depth}.nc"):
-        print(f"File {var}_{dtime}_{depth}.nc already exists.")
-        return
+        print(f"File {var}_{dtime}_{depth}.nc already exists. Overwriting...")
+        os.remove(f"{var}_{dtime}_{depth}.nc")
 
     # Load NetCDF file
     ds = xr.open_dataset(f"{var}_{dtime}.nc").set_coords([f"{latitude}", f"{longitude}"])
@@ -509,10 +514,8 @@ def crop_var(var, var_name, coord_box, depth=None):
         depth (int, optional): Depth level for which data is to be cropped.
 
     Returns:
-        tuple: (var_cropped, lat_cropped, lon_cropped, lat_indices, lon_indices)
+        tuple: (var_cropped, lat_indices, lon_indices)
             var_cropped: 2D NumPy array of cropped data.
-            lat_cropped: 1D array of the latitude values for the cropped region.
-            lon_cropped: 1D array of the longitude values for the cropped region.
             lat_indices: Indices corresponding to the cropped latitudes.
             lon_indices: Indices corresponding to the cropped longitudes.
     """
